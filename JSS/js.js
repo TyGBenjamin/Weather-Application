@@ -1,9 +1,13 @@
+
+
+
 var searchButton = document.querySelector(".searchHere");
 var weatherSection = document.getElementById('weather-part');
 var userInput = document.getElementById('userInput')
 var weatherForecast = document.getElementById('weather-forecast');
 var recentSearch = document.querySelector('.searchHistory');
 var recentSearchSection = document.getElementById('recentSearchSection')
+var listOneButton = document.getElementById('listItemOne')
 
 document.addEventListener("DOMContentLoaded", function () {
     var update = localStorage.getItem("Last City Searched")
@@ -199,9 +203,14 @@ document.addEventListener("DOMContentLoaded", function () {
         listItemFour.innerText = ""
         listItemFive.innerText = ""
 
-        listItemOne.addEventListener("on click", function(event){
+        listItemOne.addEventListener("click", function(event){
             event.preventDefault();
-            window.location.href=response.url
+            console.log("list button works")
+            getWeather(lastCity);
+            getForecast(lastCity);
+
+    
+            
         })
     })
 
@@ -229,15 +238,7 @@ function getForecast(city) {
             //creating array of objects for for loop objectData ={List: }
 
             var arrayData = [data.list[10], data.list[18], data.list[26], data.list[34], data.list[39]]
-            // for (var i=0; i<5; i++){
-            //     var x=arrayData[i]
 
-
-
-            // }
-
-
-            // var x;
             // creating divs with java to push data
             var newDiv = document.createElement("div");
             var newTemp = document.createElement('h3');
