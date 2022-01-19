@@ -8,169 +8,221 @@ var weatherForecast = document.getElementById('weather-forecast');
 var recentSearch = document.querySelector('.searchHistory');
 var recentSearchSection = document.getElementById('recentSearchSection')
 var listOneButton = document.getElementById('listItemOne')
+var errorSection=document.getElementById('errorSection')
 
 document.addEventListener("DOMContentLoaded", function () {
+    init()
+
     var update = localStorage.getItem("Last City Searched")
     if (update === null)
         JSON.parse(localStorage.getItem("Last City Searched"));
     // Handler when the DOM is fully loaded
+
+    var userEntries = []
+
+    function init() {
+        var storedEntries = JSON.parse(localStorage.getItem("userEntries"))
+        if (storedEntries !== null) {
+            userEntries = storedEntries;
+        }
+    }
 
     searchButton.addEventListener("click", function runSearch() {
         console.log("testing")
         var userCity = userInput.value
 
 
-        // // userEntry[0]=userCity
-        localStorage.setItem("Last City Searched", userCity)
-        var update = localStorage.getItem("Last City Searched");
-        localStorage.setItem("firstSave", update)
-        // var searchDiv = document.createElement('div')
-        // update[userCity] = userInput.value
 
-        if (update !== userCity) {
-            userCityTwo=userInput.value
-            localStorage.setItem("Added City", userCityTwo);
-        }
-
-        else{ var oneCity=localStorage.getItem("Last City Searched")
-            localStorage.setItem("Additional Search",oneCity )}
-        getWeather(userCity);
-        getForecast(userCity);
-
-
-    })
-
-    // recentSearch.addEventListener('click', function (event) {
-    //     event.preventDefault();
-    //     console.log('show recent search');
+            // for (var i=0 ; i<userEntries.length; i++)
+            //     var entries = userEntries[i];
+            localStorage.setItem("userEntries", JSON.stringify(userEntries))
 
 
 
 
-    //     var uList = document.createElement('ul')
-    //     var listItemOne = document.createElement('li')
-    //     listItemOne.setAttribute("id", "listItemOne")
-    //     var listItemTwo = document.createElement('li')
-    //     var listItemThree = document.createElement('li')
-    //     var listItemFour = document.createElement('li')
-    //     var listItemFive = document.createElement('li')
-
-    //     listItemOne.innerText = ""
-    //     listItemTwo.innerText = ""
-    //     listItemThree.innerText = ""
-    //     listItemFour.innerText = ""
-    //     listItemFive.innerText = ""
-
-    //     recentSearchSection.append(uList);
-    //     recentSearchSection.append(listItemOne)
-    //     recentSearchSection.append(listItemTwo)
-    //     recentSearchSection.append(listItemThree)
-    //     recentSearchSection.append(listItemFour)
-    //     recentSearchSection.append(listItemFive)
-
-    //     var lastCity=localStorage.getItem("Last City Searched")
 
 
+            // // userEntry[0]=userCity
+            var lastSearch = localStorage.setItem("previousSearch", userInput.value)
+            var firstSearch = localStorage.getItem("previousSearch")
+            userEntries.push(firstSearch)
+            if (userCity !== lastSearch) {
 
-    //     listItemOne.innerText = lastCity
-    //     listItemTwo.innerText = "testing"
-    //     listItemThree.innerText = "testing"
-    //     listItemFour.innerText = "testing"
-    //     listItemFive.innerText = "testing"
-
-    //     listItemOne.addEventListener("on click", function(event){
-    //         event.preventDefault();
-    //         window.location.href=""
-    //     })
+            }
+            console.log(userEntries)
+            localStorage.setItem("firstSearch", firstSearch)
 
 
-
+            getWeather(userCity);
+            getForecast(userCity);
 
     })
 
+})
 
 
-    // Getting Current Weather Conditions 
+
+// Getting Current Weather Conditions 
 
 
-    function getWeather(city) {
-        var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=b8033cd6f91ebcbedb1a8f2576574c01"
+function getWeather(city) {
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=b8033cd6f91ebcbedb1a8f2576574c01"
 
-        fetch(requestUrl)
-            .then((response) => {
-                console.log(response);
-                return response.json();
-            })
-            .then((data) => {
-                weatherSection.innerHTML = "";
-                console.log(data)
-                // creating divs with java to push data
-                var newDiv = document.createElement("div");
-                var newHeader = document.createElement('h1');
-                var newTemp = document.createElement('h3');
-                var newHumidity = document.createElement('h3')
-                var newWind = document.createElement('h3')
-                var newUvIndex = document.createElement('h3')
-                newUvIndex.setAttribute("id", "UvIndex")
-                var newImage = document.createElement('img')
-                newHeader.innerText = data.name;
-                newTemp.innerText = "Today's Temp: " + data.main.temp;
-                newHumidity.innerText = "Humidity: " + data.main.humidity;
-                newWind.innerText = "Wind Speed: " + data.wind.speed;
+    fetch(requestUrl)
+        .then((response) => {
+            console.log(response);
+            if ( response.ok ===false){
+                var error = document.createElement('h2')
+                error.style.color="red"
+                error.style.fontWeight="bold"
+                error.innerText = "Please Enter Valid City"
 
-                // newUvIndex= "UV Index: "+
-                newImage.src = " http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
-                newDiv.append(newHeader);
-                newDiv.append(newTemp);
-                newDiv.append(newHumidity);
-                newDiv.append(newWind);
-                newDiv.append(newImage)
-                weatherSection.append(newDiv)
+                errorSection.append(error)
+            }
+            else { errorSection.remove(error)}
+            return response.json();
+        })
 
-                var requestUrlIndex = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&exclude=hourly,alerts&units=imperial&appid=e43ae957e225197b143c05e62415986d"
-                fetch(requestUrlIndex)
-                    .then((response) => {
-                        console.log(response)
-                        return response.json();
-                    })
-                    .then((moreData) => {
-                        console.log(moreData)
-                        newUvIndex.innerText = "UV Index: " + moreData.current.uvi;
-                        newDiv.append(newUvIndex)
-                        if (moreData.current.uvi <= 1.5) {
-                            newUvIndex.style.backgroundColor = "green"
-                            newUvIndex.style.fontWeight = "bold"
-                        }
-                        else if (moreData.current.uvi >= 1.5 && moreData.current.uv <= 3.5) {
-                            newUvIndex.style.backgroundColor = "yellow"
-                            newUvIndex.style.fontWeight = "bold"
-                        }
+        
+        .then((data) => {
+            weatherSection.innerHTML = "";
+            console.log(data)
 
-                        else {
-                            newUvIndex.style.backgroundColor = "red"
-                            newUvIndex.style.fontWeight = "bold"
-                        }
+            // creating divs with java to push data
+            var newDiv = document.createElement("div");
+            var newHeader = document.createElement('h1');
+            var newTemp = document.createElement('h3');
+            var newHumidity = document.createElement('h3')
+            var newWind = document.createElement('h3')
+            var newUvIndex = document.createElement('h3')
+            newUvIndex.setAttribute("id", "UvIndex")
+            var newImage = document.createElement('img')
+            newHeader.innerText = data.name;
+            newTemp.innerText = "Today's Temp: " + data.main.temp;
+            newHumidity.innerText = "Humidity: " + data.main.humidity;
+            newWind.innerText = "Wind Speed: " + data.wind.speed;
 
-                    })
-            })
+            // newUvIndex= "UV Index: "+
+            newImage.src = " http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
+            newDiv.append(newHeader);
+            newDiv.append(newTemp);
+            newDiv.append(newHumidity);
+            newDiv.append(newWind);
+            newDiv.append(newImage)
+            weatherSection.append(newDiv)
 
-                
+            var requestUrlIndex = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&exclude=hourly,alerts&units=imperial&appid=e43ae957e225197b143c05e62415986d"
+            fetch(requestUrlIndex)
+                .then((response) => {
+                    console.log(response)
+                    return response.json();
+                })
+                .then((moreData) => {
+                    console.log(moreData)
+                    newUvIndex.innerText = "UV Index: " + moreData.current.uvi;
+                    newDiv.append(newUvIndex)
+                    if (moreData.current.uvi <= 2) {
+                        newUvIndex.style.backgroundColor = "green"
+                        newUvIndex.style.fontWeight = "bold"
+                    }
+                    else if (moreData.current.uvi > 2 && moreData.current.uvi <= 3.5) {
+                        newUvIndex.style.backgroundColor = "yellow"
+                        newUvIndex.style.fontWeight = "bold"
+                    }
+
+                    else {
+                        newUvIndex.style.backgroundColor = "red"
+                        newUvIndex.style.fontWeight = "bold"
+                    }
+
+                })
+
+                        
+  
+        })
+
+
+    
+
+
     recentSearch.addEventListener('click', function (event) {
-        event.preventDefault();
-        console.log('show recent search');
+        event.preventDefault()
+        // console.log('show recent search');
+        // recentSearchSection.innerHTML ="";
 
 
-
-
+        // Creating list Element for recent search and turning them into active buttons
+        // also setting IDs to elements to edit in CSS
         var uList = document.createElement('ul')
         var listItemOne = document.createElement('li')
         listItemOne.setAttribute("id", "listItemOne")
+
         var listItemTwo = document.createElement('li')
+        listItemTwo.setAttribute("id", "listItemTwo")
+
         var listItemThree = document.createElement('li')
+        listItemThree.setAttribute("id", "listItemThree")
+
         var listItemFour = document.createElement('li')
+        listItemFour.setAttribute("id", "listItemFour")
+
         var listItemFive = document.createElement('li')
+        listItemFive.setAttribute("id", "listItemFive")
 
 
+
+
+
+        var lastCity = localStorage.getItem("previousSearch")
+        var retrievedEntries = localStorage.getItem("userEntries")
+        var storedEntries = JSON.parse(retrievedEntries)
+        console.log(storedEntries)
+
+        secondCity = storedEntries[0]
+        thirdCity = storedEntries[1]
+        fourthCity = storedEntries[2]
+        fifthCity = storedEntries[3]
+
+
+
+
+        listItemOne.innerText = lastCity
+        listItemTwo.innerText = secondCity
+        listItemThree.innerText = thirdCity
+        listItemFour.innerText = fourthCity
+        listItemFive.innerText = fifthCity
+
+        listItemOne.addEventListener("click", function () {
+            // event.preventDefault();
+            getWeather(lastCity);
+            getForecast(lastCity);
+        })
+
+        listItemTwo.addEventListener("click", function () {
+
+            getWeather(secondCity);
+            getForecast(secondCity);
+        })
+
+        listItemThree.addEventListener("click", function () {
+
+            getWeather(thirdCity);
+            getForecast(thirdCity);
+        })
+
+
+        listItemFour.addEventListener("click", function (event) {
+            event.preventDefault();
+            getWeather(fourthCity);
+            getForecast(fourthCity);
+        })
+
+
+        listItemFive.addEventListener("click", function (event) {
+            event.preventDefault();
+            getWeather(fifthCity);
+            getForecast(fifthCity);
+        })
 
 
         recentSearchSection.append(uList);
@@ -179,39 +231,6 @@ document.addEventListener("DOMContentLoaded", function () {
         recentSearchSection.append(listItemThree)
         recentSearchSection.append(listItemFour)
         recentSearchSection.append(listItemFive)
-
-        var lastCity=localStorage.getItem("Last City Searched")
-
-
-
-        listItemOne.innerText = lastCity
-        localStorage.setItem("Second Last City", lastCity)
-
-        if (listItemOne === lastCity){
-        var secondCity=localStorage.getItem("Second Last City")
-        listItemTwo.innerText = secondCity
-        }
-        else{ listItemTwo.innerText=""}
-        localStorage.setItem("Third City", secondCity)
-
-        if (listItemTwo === secondCity){
-            var secondCity=localStorage.getItem("Second Last City")
-            listItemTwo.innerText = secondCity
-            }
-            else{ listItemTwo.innerText=""}
-        listItemThree.innerText = ""
-        listItemFour.innerText = ""
-        listItemFive.innerText = ""
-
-        listItemOne.addEventListener("click", function(event){
-            event.preventDefault();
-            console.log("list button works")
-            getWeather(lastCity);
-            getForecast(lastCity);
-
-    
-            
-        })
     })
 
 

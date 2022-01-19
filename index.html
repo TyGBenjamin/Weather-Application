@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Titillium+Web:wght@200;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="./style.css" type="text/css" rel="stylesheet">
+    <link href="./CSS/style.css" type="text/css" rel="stylesheet">
 
 
     <title>Weather App</title>
@@ -19,13 +19,19 @@
     <div class="wrapper">
         <header><i class="bx bx-left-arrow-alt"></i>Weather App</header>
         <section class="input-section">
+            <div id="errorSection"></div>
             <p class="info-txt"> Enter Valid City Name</p>
             <input id="userInput" type="text" placeholder="Enter City Name Here" spellcheck="false" required>
             <div>
                 <button class="searchHere">Search Here</button>
                 <button class="searchHistory">Click for Recent Search History</button>
             </div>
+            <section id="recentSearchSection">
 
+                </ul>
+
+
+            </section>
 
         </section>
         <section id="weather-part">
@@ -39,5 +45,5 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="./Java/js.js"></script>
+<script src="./JSS/js.js"></script>
 </html>

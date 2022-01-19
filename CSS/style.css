@@ -13,6 +13,37 @@ background:rgb(11, 230, 230);
 
 }
 
+#listItemOne:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+
+
+#listItemTwo:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+#listItemThree:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+#listItemFour:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+#listItemFive:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+/* 
+#recentSearchSection{
+    display: hidden;
+} */
+
 .wrapper{
     background-color: white;
     border-radius: 10px;
