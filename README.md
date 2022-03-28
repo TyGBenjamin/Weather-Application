@@ -1,6 +1,36 @@
 # Weather-Planner
-Simple yet Functional Weather App Program Providing Today's weather and 5-day forecast
 
+## Description
+
+Simple yet Functional Weather App Program Providing Today's weather and 5-day forecast. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Developers are often tasked with retrieving data from another application's API and using it in the context of their own. This Appliaction inc=volved building a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
+
+## Table of Contents
+
+- [Usage](#usage)
+- [Acceptance Criteria](#criteria)
+- [Preview](#Preview)
+- [Credits](#credits)
+- [Questions](#questions)
+
+## Preview
+
+A video for previewing the usage of this application can be found in the following link
+
+![Weather App Error Message](https://user-images.githubusercontent.com/94323045/150103640-84aaae97-a9c0-4657-8db2-0e57e0cd4b18.jpg)
+
+![Weather App proper](https://user-images.githubusercontent.com/94323045/150104023-3bb51fb8-4acf-4002-8dd9-19c22f5c606a.jpg)
+
+## Usage
+
+This application can be used to quickly view the curent weatehr and five-day forecast of which ever city is searched by the user.
+
+## User Story
+
+AS A traveler
+I WANT to see the weather outlook for multiple cities
+SO THAT I can plan a trip accordingly
+
+## Criteria
 
 GIVEN a weather dashboard with form inputs
 WHEN I search for a city
@@ -14,19 +44,27 @@ THEN I am presented with a 5-day forecast that displays the date, an icon repres
 WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 
+## Credits
 
-LINK to deployed page is 
-https://tygbenjamin.github.io/Weather-Application/
+Tyler Gandy
 
-Screen Shots 
+## License
 
-![Weather App Error Message](https://user-images.githubusercontent.com/94323045/150103640-84aaae97-a9c0-4657-8db2-0e57e0cd4b18.jpg)
+MIT
 
+## Badges
 
-![Weather App proper](https://user-images.githubusercontent.com/94323045/150104023-3bb51fb8-4acf-4002-8dd9-19c22f5c606a.jpg)
+![this was a badge](https://img.shields.io/badge/License-MIT-blue.svg)
 
+## Features
 
-![Weather App partial Forecast](https://user-images.githubusercontent.com/94323045/150103852-130349e2-905b-48f6-934b-a71b0dc5808a.jpg)
+Javascript
+OpenWeather API
+Local Storage
 
+## Questions
 
-![Weather App recent search with hover](https://user-images.githubusercontent.com/94323045/150104209-fc65739e-00ad-4e20-b994-65c885e82355.jpg)
+Any additional Questions feel free to email me at: TylerBGandy@gmail.com
+
+© 2021 Tyler B Gandy. Confidential and Proprietary. All Rights Reserved.
+Other Projects and repositories can be viewed [here](www.github.com/TyGBenjamin)
